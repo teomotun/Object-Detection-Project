@@ -19,7 +19,7 @@ class RecordingThread (threading.Thread):
         #self.out = cv2.VideoWriter('./static/downloads/video.avi', -1, 20.0, (640, 480))
 
 
-    def run(self):
+    def start(self):
         while self.isRunning:
             ret, frame = self.cap.read()
             if ret:

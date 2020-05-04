@@ -41,6 +41,7 @@ buttonStop.onclick = function () {
       // downloadLink.href = "/static/downloads/video.mp4";
       var download = document.getElementById("download");
       download.innerHTML = '<i class="fas fa-download m-auto text-primary"></i>';
+      download.text = "Download Video";
       download.href = "/static/downloads/video.avi";
 
     }
