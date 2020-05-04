@@ -109,12 +109,12 @@
     <input type="file" name="file" />
     <input type="submit" />
   </form> -->
-  <{{ dropzone.create(action_view='index') }}
+  {{ dropzone.create(action_view='index') }}
 
   <br>
-  <div style="text-align: center;">
+  <!-- <div style="text-align: center;">
   <p><a class="btn btn-primary btn-lg" href=# role="button" style="background: url('static/img/bg-masthead.JPG'); background-repeat: no-repeat; background-position: center top; background-size: cover; background-attachment: fixed;">SHOW IMAGES</a></p>
-  </div>
+  </div> -->
   <p>
     <ul>
       {% for file_url in file_urls %}
@@ -122,141 +122,48 @@
       {% endfor %}
     </ul>
 
-
-  <!-- <div class="layout">
-    <div id="newImages"></div>
-  
-    <div class="row">
-      <div class="cell">
-        <video id="player" autoplay></video>
+    <section class="call-to-action text-white text-center"
+      style="padding-top: 1.5rem; padding-bottom: 0rem; background: url('static/img/bg-masthead.JPG'); background-repeat: no-repeat; background-position: center top; background-size: cover; background-attachment: fixed;">
+      <div class="container">
+        <div class="row">
+          <div class="col-xl-12 mx-auto">
+            <h2 class="mb-4">STREAM VIDEO</h2>
+          </div>
+        </div>
       </div>
-      <div class="cell"></div>
-      <canvas id="canvas" width="320px" height="240px"></canvas>
+    </section>
+
+    <div class="container">
+      <div class="row" style="margin-left: 3%; ">
+        <div id="recorder">
+          <div class="col-md-1 custom-panel float-left">
+            <button id="record" style="font-size: 58px; ">
+              <i class="fas fa-play-circle m-auto text-primary"></i>
+            </button>
+            <div>   </div>
+            <button id="stop" style="font-size: 58px; ">
+              <i class="fas fa-stop-circle m-auto text-primary"></i>
+            </button>
+            <div>   </div>
+            <!-- <button style="font-size: 58px; "> -->
+              <!-- <i class="fas fa-download m-auto text-primary"> -->
+            <a id="download"></a>
+            <script type="text/javascript" src="{{ url_for('static', filename='js/recorder.js') }}"></script>
+              <!-- </i> -->
+            <!-- </button> -->
+          </div>
+          <div class="col-md-10 custom-panel float-left">
+            <img id="video" src="{{ url_for('video_viewer') }}"
+              style='border: 2px dashed #0087F7; margin: 2%; max-height: 500px; margin-top: 10px; margin-bottom: 10px; width: 90%;'>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="row">
+        <img id="video" src="{{ url_for('video_viewer') }}"
+          style='border: 2px dashed #0087F7; margin: 2%; max-height: 450px; margin-top: 10px; margin-bottom: 10px; width: 90%;'>
+      </div> -->
     </div>
-  </div>
-  <div class="center">
-    <button class="btn btn-primary" id="capture-btn">Capture</button>
-  </div>
-
-  <script>
-    const videoPlayer = document.querySelector("#player");
-      const canvasElement = document.querySelector("#canvas");
-      const captureButton = document.querySelector("#capture-btn");
-      const imagePicker = document.querySelector("#image-picker");
-      const imagePickerArea = document.querySelector("#pick-image");
-      const newImages = document.querySelector("#newImages");
-
-      // Image dimensions
-      const width = 320;
-      const height = 240;
-      let zIndex = 1;
-
-      const createImage = (src, alt, title, width, height, className) => {
-        let newImg = document.createElement("img");
-
-        if (src !== null) newImg.setAttribute("src", src);
-        if (alt !== null) newImg.setAttribute("alt", alt);
-        if (title !== null) newImg.setAttribute("title", title);
-        if (width !== null) newImg.setAttribute("width", width);
-        if (height !== null) newImg.setAttribute("height", height);
-        if (className !== null) newImg.setAttribute("class", className);
-
-        return newImg;
-      };
-
-      const startMedia = () => {
-        if (!("mediaDevices" in navigator)) {
-          navigator.mediaDevices = {};
-        }
-
-        if (!("getUserMedia" in navigator.mediaDevices)) {
-          navigator.mediaDevices.getUserMedia = constraints => {
-            const getUserMedia =
-              navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-
-            if (!getUserMedia) {
-              return Promise.reject(new Error("getUserMedia is not supported"));
-            } else {
-              return new Promise((resolve, reject) =>
-                getUserMedia.call(navigator, constraints, resolve, reject)
-              );
-            }
-          };
-        }
-
-        navigator.mediaDevices
-          .getUserMedia({ video: true })
-          .then(stream => {
-            videoPlayer.srcObject = stream;
-            videoPlayer.style.display = "block";
-          })
-          .catch(err => {
-            console.log("Something went wrong!");
-            imagePickerArea.style.display = "block";
-          });
-      };
-
-      // Capture the image, save it and then paste it to the DOM
-      captureButton.addEventListener("click", event => {
-        // Draw the image from the video player on the canvas
-        canvasElement.style.display = "block";
-        const context = canvasElement.getContext("2d");
-        context.drawImage(videoPlayer, 0, 0, canvas.width, canvas.height);
-
-        videoPlayer.srcObject.getVideoTracks().forEach(track => {
-          // track.stop();
-        });
-
-        // Convert the data so it can be saved as a file
-        let picture = canvasElement.toDataURL();
-
-        // Save the file by posting it to the server
-        fetch("./static/php/save_image.php", {
-          method: "post",
-          body: JSON.stringify({ data: picture })
-        })
-          .then(res => res.json())
-          .then(data => {
-            if (data.success) {
-              // Create the image and give it the CSS style with a random tilt
-              //  and a z-index which gets bigger
-              //  each time that an image is added to the div
-              let newImage = createImage(
-                data.path,
-                "new image",
-                "new image",
-                width,
-                height,
-                "masked"
-              );
-              console.log(newImage);
-              let tilt = -(20 + 60 * Math.random());
-              newImage.style.transform = "rotate(" + tilt + "deg)";
-              zIndex++;
-              newImage.style.zIndex = zIndex;
-              newImages.appendChild(newImage);
-              canvasElement.classList.add("masked");
-            }
-          })
-          .catch(error => console.log(error));
-      });
-
-      window.addEventListener("load", event => startMedia());
-
-      function stop(e) {
-          var stream = video.srcObject;
-          var tracks = stream.getTracks();
-
-          for (var i = 0; i < tracks.length; i++) {
-            var track = tracks[i];
-            track.stop();
-          }
-
-          video.srcObject = null;
-        }
-
-  </script> -->
-
+    
   <!-- Footer -->
   <footer class="footer">
     <div class="container">
@@ -271,6 +178,8 @@
   </footer>
 
   <!-- Bootstrap core JavaScript -->
+  <!-- <script src="static/js/app.js"></script> -->
+  <script src="static/js/recorder.js"></script>
   <script src="static/vendor/jquery/jquery.min.js"></script>
   <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
