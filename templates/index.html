@@ -7,21 +7,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  {{ dropzone.load() }}
-  {{ dropzone.style('border: 2px dashed #0087F7; margin: 10%; min-height: 400px; margin-top: 10px; margin-bottom: 10px') }}
-
   <title>HOUSEHOLD OBJECT DETECTION</title>
-
   <!-- Bootstrap core CSS -->
   <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src="static/vendor/jquery/jquery.min.js"></script>
+  <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <!-- Custom fonts for this template -->
   <link href="static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
   <link href="static/vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
-
   <!-- Custom styles for this template -->
   <link href="static/css/style.css" rel="stylesheet">
+  {{ dropzone.load() }}
+  {{ dropzone.style('border: 2px dashed #0087F7; margin: 10%; min-height: 400px; margin-top: 10px; margin-bottom: 10px') }}
 </head>
 
 <body style="background-color: bg-light;">
@@ -29,17 +28,17 @@
   <!-- Navigation --> 
   <nav class="navbar navbar-light bg-light static-top" style="background: url('static/img/bg-masthead.jpg'); background-repeat: no-repeat; background-position: center center;">
     <div class="container">
-      <a class="navbar-brand style" style="color: white; font-weight: bolder; font-size: 26px;" href="#">HOUSEHOLD OBJECT DETECTOR</a>
+      <a class="navbar-brand style" style="color: white; font-weight: bolder; font-size: 26px;" href="#">KITCHEN OBJECTS DETECTOR</a>
     </div>
   </nav>
 
   <!-- Masthead -->
-  <header class="masthead text-white text-center" style="background: url('static/img/household.jpg'); background-repeat: no-repeat; background-position: center top; background-size: cover; background-attachment: fixed;">
+  <header class="masthead text-white text-center" style="background: url('static/img/household1.jpg'); background-repeat: no-repeat; background-position: center top; background-size: cover; background-attachment: fixed;">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
         <div class="col-xl-12 mx-auto">
-          <h1 class="mb-5">GET THE HOUSEHOLD ESSENTIALS YOU'VE ALWAYS WANTED</h1>
+          <h1 class="mb-5">GET THE KITCHEN ESSENTIALS YOU'VE ALWAYS WANTED</h1>
         </div>
       </div>
     </div>
@@ -50,8 +49,8 @@
       <div class="row" style="margin: 1%;">
         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
           <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-            <div class="features-icons-icon d-flex">
-              <i class="fas fa-images m-auto text-primary" href="#"></i>
+            <div class="features-icons-icon d-flex" id="image_up">
+              <i class="fas fa-images m-auto text-primary"></i>
             </div>
             <h3 style="font-size: x-large;">UPLOAD IMAGE</h3>
           </div>
@@ -66,7 +65,7 @@
         </div>
         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
           <div class="features-icons-item mx-auto mb-0 mb-lg-3">
-            <div class="features-icons-icon d-flex">
+            <div class="features-icons-icon d-flex" id="video_up">
               <i class="fas fa-film m-auto text-primary" href="#"></i>
             </div>
             <h3 style="font-size: x-large;">UPLOAD VIDEO</h3>
@@ -75,7 +74,7 @@
         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
           <div class="col-md-6">
             <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-              <div class="features-icons-icon d-flex">
+              <div class="features-icons-icon d-flex" id="video_stream">
                 <i class="fas fa-video m-auto text-primary" href="#"></i>
               </div>
               <h3 style="font-size: x-large;">TAKE VIDEO</h3>
@@ -85,31 +84,23 @@
       </div>
     </div>
   </section>
-  
-  
-  <!-- Image Showcases -->
-  <section class="showcase">
-    
-  </section>
-
 
   <!-- Call to Action -->
-  <section class="call-to-action text-white text-center" style="padding-top: 1.5rem; padding-bottom: 0rem; background: url('static/img/bg-masthead.JPG'); background-repeat: no-repeat; background-position: center top; background-size: cover; background-attachment: fixed;">
-    <div class="container">
-      <div class="row">
-        <div class="col-xl-12 mx-auto">
-          <h2 class="mb-4">UPLOAD IMAGE</h2>
+  <div id ="icon_options">
+    <section class="call-to-action text-white text-center" style="padding-top: 1.5rem; padding-bottom: 0rem; background: url('static/img/bg-masthead.JPG'); background-repeat: no-repeat; background-position: center top; background-size: cover; background-attachment: fixed;">
+      <div class="container">
+        <div class="row">
+          <div class="col-xl-12 mx-auto">
+            <h2 class="mb-4" id="text_for_icon"></h2>
+          </div>
         </div>
       </div>
+    </section>
+    <br>
+    <div id="dropzone">
+      {{ dropzone.create(action_view='index') }}
     </div>
-  </section>
-
-  <br>
-  <!-- <form action="/" method="POST" enctype="multipart/form-data">
-    <input type="file" name="file" />
-    <input type="submit" />
-  </form> -->
-  {{ dropzone.create(action_view='index') }}
+  </div>
 
   <br>
   <!-- <div style="text-align: center;">
@@ -122,11 +113,12 @@
       {% endfor %}
     </ul>
 
+  <div id="recorderr">
     <section class="call-to-action text-white text-center"
       style="padding-top: 1.5rem; padding-bottom: 0rem; background: url('static/img/bg-masthead.JPG'); background-repeat: no-repeat; background-position: center top; background-size: cover; background-attachment: fixed;">
       <div class="container">
         <div class="row">
-          <div class="col-xl-12 mx-auto">
+          <div class="col-xl-12 mx-auto" id="video_stream_text">
             <h2 class="mb-4">STREAM VIDEO</h2>
           </div>
         </div>
@@ -134,7 +126,7 @@
     </section>
     <br>
     <div class="container">
-      <div class="row" style="margin-left: 3%; ">
+      <div class="row" style="margin-left: 3%;">
         <div id="recorder">
           <div class="col-md-1 custom-panel float-left">
             <button id="record" style="font-size: 58px; ">
@@ -148,7 +140,7 @@
             <!-- <button style="font-size: 58px; "> -->
               <!-- <i class="fas fa-download m-auto text-primary"> -->
             <a id="download"></a>
-            <script type="text/javascript" src="{{ url_for('static', filename='js/recorder.js') }}"></script>
+            <script type="text/javascript" src="{{ url_for('static', filename='./js/recorder.js') }}"></script>
               <!-- </i> -->
             <!-- </button> -->
           </div>
@@ -163,7 +155,22 @@
           style='border: 2px dashed #0087F7; margin: 2%; max-height: 450px; margin-top: 10px; margin-bottom: 10px; width: 90%;'>
       </div> -->
     </div>
-    <br>
+  </div>
+  
+  <br>
+  <div class="input-group mb-3">
+    <select class="custom-select" id="selDataset">
+      <option selected>SELECT DETECTED OBJECT</option>
+      <!-- <option value="plate">PLATE</option>
+      <option value="spoon">SPOON</option>
+      <option value="knife">KNIFE</option> -->
+    </select>
+    <div class="input-group-prepend">
+      <label class="input-group-text" for="selDataset" style="background: url('static/img/bg-masthead.JPG'); background-repeat: no-repeat; background-position: center top; background-size: cover; background-attachment: fixed; color: white;">SEARCH</label>
+    </div>
+  </div>
+
+  <br>
   <!-- Footer -->
   <footer class="footer" style="text-align: center; background-color: #bcc8d6; padding-top: 0rem; padding-bottom: 0rem;">
     <strong>
@@ -175,10 +182,8 @@
 
   <!-- Bootstrap core JavaScript -->
   <!-- <script src="static/js/app.js"></script> -->
-  <script src="static/js/recorder.js"></script>
-  <script src="static/vendor/jquery/jquery.min.js"></script>
-  <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
+  <script src="static/js/app.js" type="text/javascript"></script>
+  <script src="static/js/recorder.js" type="text/javascript"></script>
 </body>
 
 </html>

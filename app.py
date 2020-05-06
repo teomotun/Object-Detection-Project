@@ -62,20 +62,20 @@ def index():
 
 @app.route('/record_status', methods=['POST'])
 def record_status():
-    global video_camera
-    if video_camera == None:
-        video_camera = VideoCamera()
+	global video_camera
+	if video_camera == None:
+			video_camera = VideoCamera()
 
-    json = request.get_json()
+	json = request.get_json()
 
-    status = json['status']
+	status = json['status']
 
-    if status == "true":
-        video_camera.start_record()
-        return jsonify(result="started")
-    else:
-        video_camera.stop_record()
-        return jsonify(result="stopped")
+	if status == "true":
+			video_camera.start_record()
+			return jsonify(result="started")
+	else:
+			video_camera.stop_record()
+			return jsonify(result="stopped")
 
 
 def video_stream():

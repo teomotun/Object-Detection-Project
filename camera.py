@@ -11,15 +11,16 @@ class RecordingThread (threading.Thread):
         self.cap = camera
         width = int(self.cap.get(3))
         height = int(self.cap.get(4))
-        #print(int(self.cap.get(3)), int(self.cap.get(4)))
+        print(int(self.cap.get(3)), int(self.cap.get(4)))
         size = (width, height)
         # FourCC is a 4-byte code used to specify the video codec
-        fourcc = cv2.VideoWriter_fourcc(*'XVID')
-        self.out = cv2.VideoWriter('./static/downloads/video.avi',fourcc, 20.0, size)
+        fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+        fps = self.cap.get(cv2.CAP_PROP_FPS)
+        self.out = cv2.VideoWriter('./static/downloads/video.mp4',fourcc, fps, size)
         #self.out = cv2.VideoWriter('./static/downloads/video.avi', -1, 20.0, (640, 480))
 
 
-    def start(self):
+    def run(self):
         while self.isRunning:
             ret, frame = self.cap.read()
             if ret:
