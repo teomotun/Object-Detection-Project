@@ -32,6 +32,7 @@ function video_stream() {
 
 function init() {
   image_up();
+  drawTable();
 }
 
 d3.select("#image_up").on("click", image_up);
@@ -49,25 +50,18 @@ data.forEach((data) => {
 
 
 
-function drawTable(detect) {
-  let class = detect.class,
-    confidence = detect.confidence;
+function drawTable() {
 
   var values = [
     [
-      "Happiness Score",
-      "Happiness Rank",
-      "Economy (GDP per Capita)",
-      "Family",
-      "Health (Life Expectancy)",
-      "Freedom",
-      "Trust (Government Corruption)",
-      "Generosity",
-      "Dystopia Residual",
+      "Dog",
+      "Cat",
+      "Mouse"
     ],
     [
-      class,
-      confidence
+      0.80,
+      0.75,
+      0.65
     ],
   ];
 
@@ -75,7 +69,7 @@ function drawTable(detect) {
     {
       type: "table",
       columnorder: [1, 2],
-      columnwidth: [300, 300],
+      columnwidth: [200, 200],
 
       header: {
         values: [["<br>CLASSES</br>"], ["<br>CONFIDENCE</br>"]],
@@ -126,8 +120,8 @@ function drawTable(detect) {
       b: 100,
       t: 100,
     },
-    plot_bgcolor: "rgba(0, 0, 0, 0)",
-    paper_bgcolor: "rgba(0, 0, 0, 0)",
+    plot_bgcolor: "#FFFFFF",
+    paper_bgcolor: "#FFFFFF",
   };
 
   Plotly.newPlot("table", data, layout, { responsive: true });
