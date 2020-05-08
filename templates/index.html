@@ -33,7 +33,7 @@
   </nav>
 
   <!-- Masthead -->
-  <header class="masthead text-white text-center" style="background: url('static/img/household1.jpg'); background-repeat: no-repeat; background-position: center top; background-size: cover; background-attachment: fixed;">
+  <header class="masthead text-white text-center" style="background: url('static/img/household.jpg'); background-repeat: no-repeat; background-position: center top; background-size: cover; background-attachment: fixed;">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -103,15 +103,15 @@
   </div>
 
   <br>
-  <!-- <div style="text-align: center;">
-  <p><a class="btn btn-primary btn-lg" href=# role="button" style="background: url('static/img/bg-masthead.JPG'); background-repeat: no-repeat; background-position: center top; background-size: cover; background-attachment: fixed;">SHOW IMAGES</a></p>
-  </div> -->
+  <div style="text-align: center;">
+  <p><a class="btn btn-primary btn-lg" role="button" style="background: url('static/img/bg-masthead.JPG'); background-repeat: no-repeat; background-position: center top; background-size: cover; background-attachment: fixed;">SHOW IMAGES</a></p>
+  </div>
   <p>
-    <ul>
+    <!-- <ul>
       {% for file_url in file_urls %}
       <li><img style="height: 150px" src="{{ file_url }}"></li>
       {% endfor %}
-    </ul>
+    </ul> -->
 
   <div id="recorderr">
     <section class="call-to-action text-white text-center"
@@ -156,18 +156,41 @@
       </div> -->
     </div>
   </div>
-  
+
   <br>
-  <div class="input-group mb-3">
-    <select class="custom-select" id="selDataset">
-      <option selected>SELECT DETECTED OBJECT</option>
-      <!-- <option value="plate">PLATE</option>
-      <option value="spoon">SPOON</option>
-      <option value="knife">KNIFE</option> -->
-    </select>
-    <div class="input-group-prepend">
-      <label class="input-group-text" for="selDataset" style="background: url('static/img/bg-masthead.JPG'); background-repeat: no-repeat; background-position: center top; background-size: cover; background-attachment: fixed; color: white;">SEARCH</label>
+  <div id="detections">
+    <section class="call-to-action text-white text-center"
+      style="padding-top: 1.5rem; padding-bottom: 0rem; background: url('static/img/bg-masthead.JPG'); background-repeat: no-repeat; background-position: center top; background-size: cover; background-attachment: fixed;">
+      <div class="container">
+        <div class="row">
+          <div class="col-xl-12 mx-auto">
+            <h2 class="mb-4" id="text_for_icon"> DETECTIONS</h2>
+          </div>
+        </div>
+      </div>
+    </section>
+    <br>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+          <div class="input-group mb-3">
+            <select class="custom-select" id="selDataset"
+              style="max-width:100%; margin-left: 10%; padding: 8px; color: #8e979f; outline: none;">
+              <option selected>SELECT DETECTED OBJECT</option>
+            </select>
+            <div class="input-group-prepend">
+              <label class="input-group-text" for="selDataset"
+                style="background: url('static/img/bg-masthead.JPG'); background-repeat: no-repeat; background-position: center top; background-size: cover; background-attachment: fixed; color: white;">SEARCH</label>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div id="table">
+          </div>
+        </div>
+      </div>
     </div>
+    <br>
   </div>
 
   <br>

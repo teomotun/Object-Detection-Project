@@ -5,7 +5,7 @@ from flask_dropzone import Dropzone
 from flask_uploads import UploadSet, configure_uploads, IMAGES, patch_request_class
 from camera import VideoCamera
 
-APP_ROOT =os.path.dirname(os.path.abspath(__file__))
+#APP_ROOT =os.path.dirname(os.path.abspath(__file__))
 upload = os.getcwd() + '/uploads/'
 
 app = Flask(__name__)
@@ -57,7 +57,7 @@ def index():
 
 		session['file_urls'] = file_urls
 	# return dropzone template on GET request
-	return render_template('index.html')
+	return render_template('index.html', file_urls=file_urls)
 
 
 @app.route('/record_status', methods=['POST'])
